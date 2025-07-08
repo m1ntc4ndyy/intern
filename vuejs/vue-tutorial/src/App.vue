@@ -2,6 +2,10 @@
   <div id="app">
     <nav>
       <router-link to="/todo">Todo</router-link>
+      <router-link to="/conditional">Conditional and Loop</router-link>
+      <router-link to="/crud">CRUD</router-link>
+      <router-link to="/form">Form</router-link>
+      <router-link to="/fetch">Fetch</router-link>
     </nav>
     <router-view />
   </div>
