@@ -1,74 +1,39 @@
-<script setup lang="ts">
-import { ref, computed } from 'vue'
-interface Todo {
-  id: number
-  text: string
-  status: boolean
-}
-let id = 0
-const newTodo = ref('')
-const todos = ref<Todo[]>([])
-const hideCompleted = ref(false)
-
-const addTodo = () => {
-  todos.value.push({
-    id: id++,
-    text: newTodo.value,
-    status: false
-  })
-  newTodo.value = ''
-}
-
-const deleteTodo = (id: number) => {
-  todos.value = todos.value.filter(item => item.id !== id)
-  
-}
-const filteredTodos = computed(() => {
-  return hideCompleted.value ? todos.value.filter(todo => !todo.status) : todos.value
-})
-</script>
-
 <template>
-  <div class="container">
-    <form @submit.prevent="addTodo">
-      <input type="text" v-model="newTodo" placeholder="Add a new todo" required />
-      <button type="submit">Add</button>
-    </form>
-    <br />
-    <ul>
-      <li v-for="todo in filteredTodos" :key="todo.id">
-        <input type="checkbox" v-model="todo.status" />
-        <span :class="{'todo-text': todo.status}">{{ todo.text }}</span>
-        <button @click="deleteTodo(todo.id)">X</button>
-        <br />
-      </li>
-    </ul>
-
-    <button @click="hideCompleted = !hideCompleted">
-      {{ hideCompleted ? "Show all" : "Hide Completed" }}
-    </button>
+  <div id="app">
+    <nav>
+      <router-link to="/todo">Todo</router-link>
+    </nav>
+    <router-view />
   </div>
 </template>
 
-<style scoped>
-.container {
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 2rem;
-  background-color: #f9f9f9;
+<script setup lang="ts">
+</script>
+
+<style>
+nav {
+  margin-bottom: 20px;
+  padding: 10px;
+  background-color: #f8f9fa;  
+  border-bottom: 1px solid #dee2e6;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
 }
 
-h1 {
-  font-size: 2rem;
-  margin-top: 1rem;
+nav a {
+  margin-right: 15px;
+  text-decoration: none;
+  color: #42b983;
+}
+nav a:hover {
+  text-decoration: underline;
 }
 
-span {
-  margin: 0 5px;
-  font-size: large;
-}
-.todo-text {
-  text-decoration: line-through;
-  color: gray;
+
+nav a.router-link-exact-active {
+  font-weight: bold;
 }
 </style>
